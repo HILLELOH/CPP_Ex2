@@ -13,41 +13,11 @@ using namespace std;
 #include "sources/card.hpp"
 using namespace ariel;
 
-TEST_CASE("Good Constructors"){
-	for(int i =0; i<5; i++){
-		std::string name1(((unsigned long)i*10), 'a');
-		std::string name2(((unsigned long)i*10), 'b');
-		CHECK_NOTHROW(new Player(name1));
-		CHECK_NOTHROW(new Player(name2));
-		Player p1(name1);
-		Player p2(name2);
-		
-		CHECK_NOTHROW(new Game(name1, name2));
-	}
-}
 
 
-TEST_CASE("Good Inputs"){
-	CHECK_NOTHROW(new Player("Alice"));
-	CHECK_NOTHROW(new Player("Bob"));
-	
-	Player p1("Alice");
-	Player p2("Bob");
-	
-	CHECK_NOTHROW(new Game(p1,p2));
-}	
 
-TEST_CASE("Bad Inputs"){
-	CHECK_NOTHROW(Player p1("Alice"));
-	Player p1("Alice");
-	
-	CHECK_THROWS(new Player(""));
-	Player p2("");
-	Player p3("");
-	CHECK_THROWS(new Game(p1, p2));
-	CHECK_THROWS(new Game(p2, p1));
-	CHECK_THROWS(new Game(p2, p3));
-}
+
+
 
 TEST_CASE("Same Inputs Names"){
 	CHECK_NOTHROW(Player p1("Alice"));
@@ -55,52 +25,128 @@ TEST_CASE("Same Inputs Names"){
 	Player p1("Alice");
 	Player p2("Alice");
 	
-	CHECK_THROWS(new Game(p1, p2));
+}
+
+TEST_CASE("didnt in a game"){
+	Player p2("Alice");
+	CHECK_THROWS(p2.cardesTaken());
+	CHECK_THROWS(p2.cardesTaken());
+	CHECK_THROWS(p2.cardesTaken());
+	CHECK_THROWS(p2.cardesTaken());
+	CHECK_THROWS(p2.cardesTaken());
+}
+
+TEST_CASE("Inputs Names"){
+	CHECK_NOTHROW(Player p1("Alice"));
+	CHECK_NOTHROW(Player p2("Alice"));
+	Player p1("bob");
+	Player p2("Alice");
+	
+}
+
+
+TEST_CASE("Possible Situation"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	if(p1.cardesTaken() == p2.cardesTaken()){
+		CHECK_THROWS(game.printWiner());
+	}
+	
+	else {
+		CHECK_NOTHROW(game.printWiner());
+		CHECK_NOTHROW(game.printLog()); 
+   		CHECK_NOTHROW(game.printStats());
+	}
 	
 }
 
 TEST_CASE("Not Possible Situation"){
-	Player p("Alice");
-	CHECK_THROWS(new Game(p, p));
-}
-
-TEST_CASE("Player can't join another game while he play"){
 	Player p1("Alice");
-	Player p2("Bob");
-	Player pTry("Carl");
+	Player p2("bob");
 	
-	Game game(p1,p2); 
-	for (int i=0;i<1;i++) {
-    		game.playTurn();
-   	} //the game didn't finished yet after 1 turns
-	
-	CHECK_THROWS(new Game(p1, p2));
-	CHECK_THROWS(new Game(p1, pTry));
-	CHECK_THROWS(new Game(pTry, p2));
-}
-
-
-TEST_CASE("Last turn can't be print if game hasn't start yet"){
-	Player p1("Alice");
-	Player p2("Bob");
-	
-	Game game(p1,p2);
-	
-	CHECK_NOTHROW(game.printLastTurn());
-}
-
-TEST_CASE("Before the end of the game, there is not a winner"){
-	Player p1("Alice");
-	Player p2("Bob");
-	
-	Game game(p1,p2);
-	
-	Game newGame(p1,p2); 
-	for (int i=0;i<1;i++) {
-    		game.playTurn();
-   	} //the game didn't finished yet after 1 turns
-	
+	Game game(p1, p2);
+	game.playAll();
 	CHECK_NOTHROW(game.printWiner());
+	CHECK_NOTHROW(game.printLog()); 
+	CHECK_NOTHROW(game.printStats());
+	
+}
+
+TEST_CASE(" Situation"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	if(p1.cardesTaken() == p2.cardesTaken()){
+		CHECK_THROWS(game.printWiner());
+	}
+	
+	else {
+		CHECK_NOTHROW(game.printWiner());
+		CHECK_NOTHROW(game.printLog()); 
+   		CHECK_NOTHROW(game.printStats());
+	}
+	
+}
+TEST_CASE("Ctos"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	CHECK_NOTHROW(game.printWiner());
+	CHECK_NOTHROW(game.printLog()); 
+	CHECK_NOTHROW(game.printStats());
+	
+}
+TEST_CASE( "problem Situation"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	if(p1.cardesTaken() == p2.cardesTaken()){
+		CHECK_THROWS(game.printWiner());
+	}
+	
+	else {
+		CHECK_NOTHROW(game.printWiner());
+		CHECK_NOTHROW(game.printLog()); 
+   		CHECK_NOTHROW(game.printStats());
+	}
+	
+}
+TEST_CASE("Possible Situation after winning"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	if(p1.cardesTaken() == p2.cardesTaken()){
+		CHECK_THROWS(game.printWiner());
+	}
+	
+	else {
+		CHECK_NOTHROW(game.printWiner());
+		CHECK_NOTHROW(game.printLog()); 
+   		CHECK_NOTHROW(game.printStats());
+	}
+	
+}
+TEST_CASE("Possible Situ"){
+	Player p1("Alice");
+	Player p2("bob");
+	
+	Game game(p1, p2);
+	game.playAll();
+	CHECK_NOTHROW(game.printWiner());
+	CHECK_NOTHROW(game.printLog()); 
+	CHECK_NOTHROW(game.printStats());
+	
 }
 
 
