@@ -30,10 +30,6 @@ TEST_CASE("Same Inputs Names"){
 TEST_CASE("didnt in a game"){
 	Player p2("Alice");
 	CHECK_THROWS(p2.cardesTaken());
-	CHECK_THROWS(p2.cardesTaken());
-	CHECK_THROWS(p2.cardesTaken());
-	CHECK_THROWS(p2.cardesTaken());
-	CHECK_THROWS(p2.cardesTaken());
 }
 
 TEST_CASE("Inputs Names"){
@@ -147,6 +143,27 @@ TEST_CASE("Possible Situ"){
 	CHECK_NOTHROW(game.printLog()); 
 	CHECK_NOTHROW(game.printStats());
 	
+}
+
+TEST_CASE("The amount of cards before starting a game")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+
+    CHECK(p1.stacksize() == 0);
+    CHECK(p2.stacksize() == 0);
+    CHECK(p1.cardesTaken() == 0);
+    CHECK(p2.cardesTaken() == 0);
+}
+
+TEST_CASE("The card scheme at the end of the game")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1, p2);
+    game.playAll();
+    int sum = p1.stacksize() + p1.cardesTaken() + p2.stacksize() + p2.cardesTaken();
+    CHECK(sum == 52);
 }
 
 
